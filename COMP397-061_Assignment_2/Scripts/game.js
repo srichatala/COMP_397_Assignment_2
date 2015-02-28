@@ -1,4 +1,11 @@
 ﻿/// <reference path="objects/button.ts" />
+
+// Source file name: game.ts
+// Author: Srinivasarao Chatala
+// Last modified by: Srinivasarao Chatala
+// Last modified date: 27/02/2015
+// Description: This is the main game code that generates all of the graphics
+//              and contains all of the funtionality
 var canvas;
 var stage;
 
@@ -7,6 +14,9 @@ var game;
 var background;
 var spinButton;
 var resetButton;
+var betMaxButton;
+var betTenButton;
+var powerButton;
 var tiles = [];
 var tileContainers = [];
 
@@ -31,6 +41,11 @@ var bars = 0;
 var bells = 0;
 var sevens = 0;
 var blanks = 0;
+
+var jackpotTxt;
+var creditsTxt;
+var betTxt;
+var winningsTxt;
 
 function init() {
     canvas = document.getElementById("canvas");
@@ -66,22 +81,81 @@ function spinButtonOver() {
 spinButton.alpha = 0.5;
 }*/
 function spinReels() {
-    // Add Spin Reels code here
-    spinResult = Reels();
-    fruits = spinResult[0] + " - " + spinResult[1] + " - " + spinResult[2];
-    console.log(fruits);
+    if (playerMoney != 0 && playerBet != 0) {
+        if (playerBet <= playerMoney) {
+            playerMoney -= playerBet;
+            spinResult = Reels();
+            determineWinnings();
+            tmnt = spinResult[0] + " - " + spinResult[1] + " - " + spinResult[2];
 
-    for (var tile = 0; tile < 3; tile++) {
-        if (turn > 0) {
-            game.removeChild(tiles[tile]);
+            for (var slot = 0; slot < slotContainer.length; slot++) {
+                slotContainer[slot].removeAllChildren();
+                icons[slot] = new createjs.Bitmap("assets/images/" + spinResult[slot] + ".png");
+                slotContainer[slot].addChild(icons[slot]);
+            }
+            jackpotTxt.text = "$" + jackpot;
+            creditsTxt.text = "$" + playerMoney;
         }
-        tiles[tile] = new createjs.Bitmap("assets/images/" + spinResult[tile] + ".png");
-        tiles[tile].x = 59 + (105 * tile);
-        tiles[tile].y = 188;
-
-        game.addChild(tiles[tile]);
-        console.log(game.getNumChildren());
+        else {
+            playerBet = 0;
+            betTxt.text = "$" + playerBet;
+            winningsTxt.text = "Can't Bet";
+        }
     }
+}
+
+
+//BET $10 BUTTON
+function betOneButtonClicked() {
+    if (playerBet >= playerMoney) {
+        winningsTxt.text = "Not Enough";
+    }
+    else {
+        playerBet += 1;
+        betTxt.text = "$" + playerBet;
+        winningsTxt.text = "";
+    }
+}
+//BET MAX BUTTON (spins automatically when pressed
+function betMaxButtonClicked() {
+    playerBet = playerMoney;
+    if (playerBet != 0) {
+        playerMoney -= playerBet;
+        spinResult = Reels();
+        determineWinnings();
+        tmnt = spinResult[0] + " - " + spinResult[1] + " - " + spinResult[2];
+
+        for (var slot = 0; slot < slotContainer.length; slot++) {
+            slotContainer[slot].removeAllChildren();
+            icons[slot] = new createjs.Bitmap("assets/images/" + spinResult[slot] + ".png");
+            slotContainer[slot].addChild(icons[slot]);
+        }
+        resetTally();
+        jackpotTxt.text = "$" + jackpot;
+        creditsTxt.text = "$" + playerMoney;
+        betTxt.text = "$" + playerBet;
+        winningsTxt.text = "$" + winnings;
+        winnings = 0;
+    }
+    playerBet = 0;
+}
+
+
+//reset button event
+function resetButtonClicked() {
+    resetAll();
+    for (var slot = 0; slot < slotContainer.length; slot++) {
+        slotContainer[slot].removeAllChildren();
+    }
+    jackpotTxt.text = "$" + jackpot;
+    creditsTxt.text = "$" + playerMoney;
+    betTxt.text = "$" + playerBet;
+    winningsTxt.text = "$" + winnings;
+}
+//Power button clicked
+function powerButtonClicked() {
+    window.open('', '_parent', '');
+    window.close();
 }
 
 /* Utility function to check if a value falls within a range of bounds */
@@ -197,12 +271,48 @@ function createUI() {
     spinButton.getImage().addEventListener("click", spinReels);
 
     // Reset Button
-    resetButton = new objects.Button("assets/images/resetButton.png", 38, 380);
+    betMaxButton = new objects.Button("assets/images/betMaxButton.png", 200, 370);
+    game.addChild(betMaxButton.getImage());
+
+    betMaxButton.getImage().addEventListener("click", betMaxButtonClicked);
+
+    // Bet One Button
+    betOneButton = new objects.Button("assets/images/betOneButton.png", 150, 370);
+    game.addChild(betOneButton.getImage());
+
+    betOneButton.getImage().addEventListener("click", betOneButtonClicked);
+
+    // Reset Button
+    resetButton = new objects.Button("assets/images/resetButton.png", 80, 370);
     game.addChild(resetButton.getImage());
 
-    resetButton.getImage().addEventListener("click", function () {
-        console.log("reset clicked");
-    });
+    resetButton.getImage().addEventListener("click", resetButtonClicked);
+
+    // Power Button
+    powerButton = new objects.Button("assets/images/powerButton.png", 70, 365);
+    game.addChild(powerButton.getImage());
+
+    powerButton.getImage().addEventListener("click", powerButtonClicked);
+
+    jackpotTxt = new createjs.Text("$" + jackpot, "26px Arial", "#ffffff");
+    game.addChild(jackpotTxt);
+    jackpotTxt.x = 280;
+    jackpotTxt.y = 22;
+
+    creditsTxt = new createjs.Text("$" + playerMoney, "26px Arial", "#ffffff");
+    game.addChild(creditsTxt);
+    creditsTxt.x = 134;
+    creditsTxt.y = 320;
+
+    betTxt = new createjs.Text("$" + playerBet, "26px Arial", "#ffffff");
+    game.addChild(betTxt);
+    betTxt.x = 290;
+    betTxt.y = 320;
+
+    winningsTxt = new createjs.Text("$" + winnings, "26px Arial", "#ffffff");
+    game.addChild(winningsTxt);
+    winningsTxt.x = 215;
+    winningsTxt.y = 376;
 }
 
 // Our Game Kicks off in here

@@ -1,4 +1,11 @@
-﻿var objects;
+﻿
+// Source file name: button.ts
+// Author: Chatala Srinivasarao Smith
+// Last modified by: SrinivasaRao Chatala Smith
+// Last modified date: 27/02/2015
+// Description: This code creates the button objects which includes over and out functions
+
+var objects;
 (function (objects) {
     var Button = (function () {
         function Button(path, x, y) {
