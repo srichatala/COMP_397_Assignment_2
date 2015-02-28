@@ -1,5 +1,11 @@
 ﻿/// <reference path="objects/button.ts" />
 
+// Source file name: game.ts
+// Author: Srinivasarao Chatala
+// Last modified by: Srinivasarao Chatala 
+// Last modified date: 27/02/2015
+// Description: This is the main game code that generates all of the graphics
+//              and contains all of the funtionality
 
 var canvas;
 var stage: createjs.Stage;
