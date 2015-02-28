@@ -1,0 +1,6 @@
+E:\COMP_397_Assignment_2\COMP397-061_Assignment_2\bin\COMP397-061_Assignment_2.dll.config
+E:\COMP_397_Assignment_2\COMP397-061_Assignment_2\bin\COMP397-061_Assignment_2.dll
+E:\COMP_397_Assignment_2\COMP397-061_Assignment_2\bin\COMP397-061_Assignment_2.pdb
+E:\COMP_397_Assignment_2\COMP397-061_Assignment_2\obj\Debug\COMP397-061_Assignment_2.csprojResolveAssemblyReference.cache
+E:\COMP_397_Assignment_2\COMP397-061_Assignment_2\obj\Debug\COMP397-061_Assignment_2.dll
+E:\COMP_397_Assignment_2\COMP397-061_Assignment_2\obj\Debug\COMP397-061_Assignment_2.pdb

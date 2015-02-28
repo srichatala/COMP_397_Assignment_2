@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>COMP397  Solt Machine</title>
+    <!-- CSS Section -->
+    <link href="Styles/game.css" rel="stylesheet" />
+    <link href="Styles/bootstrap.css" rel="stylesheet" />
+</head>
+<body onload="init();">
+    <div class="container">
+        <!-- Canvas where the Game will Happen-->
+        <header>
+            <img src="assets/images/header.png" alt="" width="100%" />
+        </header>
+        <div class="row">
+            <div class="col-md-6 col-md-offset-4">
+                <canvas id="canvas" width="450" height="450"></canvas>
+            </div>
+        </div>
+        <footer id="footer">
+            <div class="modal-footer">
+                Copyright © 2014-15 Casino Slots. All rights reserved.
+            </div>
+        </footer>
+    </div>
+    <!-- JavaScript -->
+    <script src="Scripts/lib/easeljs-0.8.0.min.js"></script>
+    <script src="Scripts/lib/tweenjs-0.6.0.min.js"></script>
+    <script src="Scripts/lib/soundjs-0.6.0.min.js"></script>
+    <script src="Scripts/lib/preloadjs-0.6.0.min.js"></script>
+
+    <!-- GAME SCRIPTS -->
+    <script src="Scripts/objects/Button.js"></script>
+
+
+
+    <script src="Scripts/game.js"></script>
+</body>
+</html>

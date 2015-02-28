@@ -1,0 +1,11 @@
+﻿#canvas{
+    border:double 2px #333333;
+}
+#footer {
+    background-color:#333333;
+    color:#fff;
+}
+.content {
+    margin-top:100px;
+    height:300px;
+}
